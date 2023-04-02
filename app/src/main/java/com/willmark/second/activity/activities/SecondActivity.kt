@@ -1,13 +1,16 @@
 package com.willmark.second.activity.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import com.willmark.second.R
 
+@Suppress("DEPRECATION")
 class SecondActivity : AppCompatActivity() {
-    val TAG = SecondActivity::class.java.toString()
+    private val TAG = SecondActivity::class.java.toString()
     private lateinit var textB:TextView
     private lateinit var textC:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,15 +20,24 @@ class SecondActivity : AppCompatActivity() {
         initViews()
     }
 
+    private fun backToFinish(){
+        val returnIntent = Intent()
+        returnIntent.putExtra("result", "Do your best")
+        setResult(RESULT_OK, returnIntent)
+        finish()
+    }
     private fun initViews(){
-        textB = findViewById(R.id.IdText)
+        textB = findViewById(R.id.ageText)
         textC = findViewById(R.id.nameText)
-        var textName = intent.getSerializableExtra("name")
-        var textId = intent.getSerializableExtra("id")
-
-        textB.text = textId.toString()
+        val textName = intent.getSerializableExtra("name")
+        val textAge = intent.getSerializableExtra("age")
+        val button = findViewById<Button>(R.id.button)
+        button.setOnClickListener {
+            backToFinish()
+        }
+        textB.text = textAge.toString()
         textC.text = textName.toString()
         Log.d(TAG, "initViews: name $textName")
-        Log.d(TAG, "initViews: id $textId")
+        Log.d(TAG, "initViews: age $textAge")
     }
 }
